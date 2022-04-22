@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<package >
+  <metadata>
+    <id>Jox.MergeCSharpFiles</id>
+    <version>0.5.0</version>
+    <authors>Joris Patroons</authors>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <license type="expression">Unlicense</license>
+    <description>Merge all C# code in this project into a single C# file, to be used as the local file for Codingame-Sync</description>
+    <copyright>Copyright 2022</copyright>
+    <tags>Codingame Sync</tags>
+  </metadata>
+</package>

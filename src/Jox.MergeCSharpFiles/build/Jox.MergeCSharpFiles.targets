@@ -1,0 +1,79 @@
+<Project>
+	<UsingTask
+	  TaskName="MergeCSharpFiles"
+	  TaskFactory="CodeTaskFactory"
+	  AssemblyFile="$(MSBuildToolsPath)\Microsoft.Build.Tasks.Core.dll" >
+		<ParameterGroup>
+			<OutputFile Required="true" />
+			<InputFiles ParameterType="Microsoft.Build.Framework.ITaskItem[]" Required="true" />
+		</ParameterGroup>
+		<Task>
+			<Using Namespace="System" />
+			<Using Namespace="System.Collections.Generic"/>
+			<Using Namespace="System.IO"/>
+			<Using Namespace="System.Text"/>
+			<Code Type="Fragment" Language="cs">
+				<![CDATA[
+var classes = new StringBuilder();
+var usings = new SortedSet<string>();
+
+foreach (var inputFile in InputFiles)
+{
+    var fileName = inputFile.ItemSpec.ToLowerInvariant();
+    if (fileName.EndsWith("assemblyinfo.cs") || fileName.EndsWith("assemblyattributes.cs"))
+    {
+        continue;
+    }
+    var pastUsing = false;
+    foreach (var line in File.ReadLines(inputFile.ItemSpec))
+    {
+        var trimmed = line.Trim();
+        if (!pastUsing && trimmed.Length > 0 && !trimmed.StartsWith("using ")
+                && !trimmed.StartsWith("//") && !trimmed.StartsWith("global using "))
+        {
+            pastUsing = true;
+            classes.AppendLine();
+        }
+        if (pastUsing)
+        {
+            classes.AppendLine(line);
+        }
+        else if (trimmed.Length > 0)
+        {
+            if (trimmed.StartsWith("global using "))
+            {
+                trimmed = trimmed.Substring(7).Replace("global::", "");
+            }
+            if (!trimmed.StartsWith("//"))
+            {
+                usings.Add(trimmed);
+            }
+        }
+    }
+}
+
+using (var output = File.CreateText(OutputFile))
+{
+    output.WriteLine("/* merged at {0:yyyy-MM-dd HH:mm:ss} local time */", DateTime.Now);
+    foreach (var line in usings)
+    {
+        output.WriteLine(line);
+    }
+    output.WriteLine(classes.ToString());
+}
+]]>
+			</Code>
+		</Task>
+	</UsingTask>
+
+	<PropertyGroup>
+		<BuildDependsOn>
+			$(BuildDependsOn);
+			CreateMergedCSharpFile
+		</BuildDependsOn>
+	</PropertyGroup>
+
+	<Target Name="CreateMergedCSharpFile">
+		<MergeCSharpFiles InputFiles="@(Compile)" OutputFile="$(BaseIntermediateOutputPath)Merged.cs" />
+	</Target>
+</Project>
