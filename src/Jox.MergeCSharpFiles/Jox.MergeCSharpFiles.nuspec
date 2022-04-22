@@ -8,6 +8,6 @@
     <license type="expression">Unlicense</license>
     <description>Merge all C# code in this project into a single C# file, to be used as the local file for Codingame-Sync</description>
     <copyright>Copyright 2022</copyright>
-    <tags>Codingame Sync</tags>
+    <tags>Codingame</tags>
   </metadata>
 </package>
