@@ -2,7 +2,7 @@
 <package>
   <metadata>
     <id>Jox.MergeCSharpFiles</id>
-    <version>0.5.1</version>
+    <version>0.5.2</version>
     <authors>Joris Patroons</authors>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <license type="expression">Unlicense</license>
@@ -13,6 +13,7 @@
     <tags>CodinGame</tags>
   </metadata>
   <files>
+    <file src="build\**" target="build\" />
     <file src="..\..\README.md" target="docs\" />
   </files>
 </package>
