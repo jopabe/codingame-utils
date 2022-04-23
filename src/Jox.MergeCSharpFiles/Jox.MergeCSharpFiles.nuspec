@@ -2,12 +2,17 @@
 <package >
   <metadata>
     <id>Jox.MergeCSharpFiles</id>
-    <version>0.5.0</version>
+    <version>0.5.1</version>
     <authors>Joris Patroons</authors>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <license type="expression">Unlicense</license>
-    <description>Merge all C# code in this project into a single C# file, to be used as the local file for Codingame-Sync</description>
+    <repository type="git" url="https://github.com/jopabe/codingame-utils" />
+    <description>Merge all C# code in this project into a single C# file, to be used as the local file for codingame-sync. The merged file is saved as obj\Merged.cs</description>
+    <readme>docs\README.md</readme>
     <copyright>Copyright 2022</copyright>
-    <tags>Codingame</tags>
+    <tags>CodinGame</tags>
   </metadata>
+  <files>
+    <file src="..\..\README.md" target="docs\" />
+  </files>
 </package>
