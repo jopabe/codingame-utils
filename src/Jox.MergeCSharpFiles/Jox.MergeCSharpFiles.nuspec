@@ -2,7 +2,7 @@
 <package>
   <metadata>
     <id>Jox.MergeCSharpFiles</id>
-    <version>0.5.2</version>
+    <version>0.6.0</version>
     <authors>Joris Patroons</authors>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <license type="expression">Unlicense</license>

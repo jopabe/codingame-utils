@@ -1,19 +1,18 @@
 <Project>
-	<UsingTask
-	  TaskName="MergeCSharpFiles"
-	  TaskFactory="CodeTaskFactory"
-	  AssemblyFile="$(MSBuildToolsPath)\Microsoft.Build.Tasks.Core.dll" >
-		<ParameterGroup>
-			<OutputFile Required="true" />
-			<InputFiles ParameterType="Microsoft.Build.Framework.ITaskItem[]" Required="true" />
-		</ParameterGroup>
-		<Task>
-			<Using Namespace="System" />
-			<Using Namespace="System.Collections.Generic"/>
-			<Using Namespace="System.IO"/>
-			<Using Namespace="System.Text"/>
-			<Code Type="Fragment" Language="cs">
-				<![CDATA[
+  <UsingTask TaskName="MergeCSharpFiles"
+             TaskFactory="CodeTaskFactory"
+             AssemblyFile="$(MSBuildToolsPath)\Microsoft.Build.Tasks.Core.dll" >
+    <ParameterGroup>
+      <OutputFile Required="true" />
+      <InputFiles ParameterType="Microsoft.Build.Framework.ITaskItem[]" Required="true" />
+    </ParameterGroup>
+    <Task>
+      <Using Namespace="System" />
+      <Using Namespace="System.Collections.Generic"/>
+      <Using Namespace="System.IO"/>
+      <Using Namespace="System.Text"/>
+      <Code Type="Fragment" Language="cs">
+        <![CDATA[
 var classes = new StringBuilder();
 var usings = new SortedSet<string>();
 
@@ -62,18 +61,15 @@ using (var output = File.CreateText(OutputFile))
     output.WriteLine(classes.ToString());
 }
 ]]>
-			</Code>
-		</Task>
-	</UsingTask>
+      </Code>
+    </Task>
+  </UsingTask>
 
-	<PropertyGroup>
-		<BuildDependsOn>
-			$(BuildDependsOn);
-			CreateMergedCSharpFile
-		</BuildDependsOn>
-	</PropertyGroup>
+  <PropertyGroup>
+    <MergedCSharpFile Condition=" '$(MergedCSharpFile)' == '' ">$(BaseIntermediateOutputPath)Merged.cs</MergedCSharpFile>
+  </PropertyGroup>
 
-	<Target Name="CreateMergedCSharpFile">
-		<MergeCSharpFiles InputFiles="@(Compile)" OutputFile="$(BaseIntermediateOutputPath)Merged.cs" />
-	</Target>
+  <Target Name="CreateMergedCSharpFile" AfterTargets="Build">
+    <MergeCSharpFiles InputFiles="@(Compile)" OutputFile="$(MergedCSharpFile)" />
+  </Target>
 </Project>
