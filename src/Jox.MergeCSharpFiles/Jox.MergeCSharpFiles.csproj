@@ -1,0 +1,21 @@
+<Project Sdk="Microsoft.Build.NoTargets/3.7.0">
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+
+    <Authors>Joris Patroons</Authors>
+    <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
+    <PackageLicenseExpression>Unlicense</PackageLicenseExpression>
+    <RepositoryUrl>https://github.com/jopabe/codingame-utils.git</RepositoryUrl>
+    <Description>Merge all C# code in this project into a single C# file, to be used as the local file for codingame-sync. The merged file is saved as obj\Merged.cs</Description>
+    <PackageReadmeFile>docs/README.md</PackageReadmeFile>
+    <Copyright>Copyright 2022-2024</Copyright>
+    <PackageTags>CodinGame</PackageTags>
+
+    <PackageVersion>0.7.0</PackageVersion>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="build/**" Pack="true" PackagePath="build/" />
+    <None Include="../../README.md" Pack="true" PackagePath="docs/" />
+  </ItemGroup>
+</Project>
